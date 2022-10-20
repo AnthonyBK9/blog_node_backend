@@ -34,3 +34,27 @@
         ]
     }
     
+
+* Rutas
+
+/api/v1
+
+/auth
+    - /register
+    - /login
+    - /confirm-user/:token
+    - /reset-password
+    - /reset-password/:token
+
+/users
+    - /me
+    - /me/posts
+    - /me/posts/id
+    - /:id
+
+/categories
+    - /:id
+    - /:id/posts
+
+/posts
+    - /:id
