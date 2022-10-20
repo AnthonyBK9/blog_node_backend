@@ -1,6 +1,7 @@
 
-const { getUserByEmail, userConfirmValidate, getUserByToken } = require('../users/users.controllers')
+const { getUserByEmail, resetPassword, getUserByToken } = require('../users/users.controllers')
 const { comparePassword } = require('../utils/crypto')
+const { hashPassword } = require('../utils/crypto');
 const Users = require('../models/users.models')
 
 //* Email y Password del usuario
@@ -33,11 +34,32 @@ const userConfirm = async (token) => {
 }
 
 const passwordRecovery = async (email) => {
+    try {
+        const emailConfirm = await getUserByEmail(email)
+        await resetPassword(email)
+        return emailConfirm
+    } catch (error) {
+        return error
+    }
+}
 
+const newPassword = async (token,password) => {
+    const data = {
+        token: '', 
+        password: hashPassword(password)
+    }
+    const result = await Users.update(data, {
+        where: {
+            token
+        }
+    })
+    return result;
 }
 
 module.exports = {
     loginUser,
-    userConfirm
+    userConfirm,
+    passwordRecovery,
+    newPassword
 }
 

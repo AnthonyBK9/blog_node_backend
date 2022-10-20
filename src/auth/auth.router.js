@@ -12,6 +12,7 @@ const { registerUser } = require('../users/users.services')
 router.post('/register', registerUser)
 router.post('/login', authServices.login)
 router.post('/confirm-user/:token', authServices.confirm )
-// router.post('/password-recovery/:token', authServices.userConfirm )
+router.post('/reset-password', authServices.passwordRecoveryUser )
+router.post('/reset-password/:token', authServices.newPasswordUser )
 
 module.exports = router;

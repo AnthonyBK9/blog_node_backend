@@ -64,7 +64,6 @@ const getUserByEmail = async (email) => {
             status: 'active'
         }
     });
-    console.log(data);
     return data;
 }
 
@@ -91,8 +90,25 @@ const userConfirmValidate = async (token) => {
     return result;
 }
 
-const recoberyPasswrod = async (password) => {
-    // const data = 
+const resetPassword = async (email) => {
+    const data = {
+        token: generateToken()
+    }
+    const result = await User.update(data, {
+        where: {
+            email
+        }
+    })
+    return result;
+}
+
+const newPasswordUser = async (email, password) => {
+    const data = await User.update(password, {
+        where: {
+            email
+        }
+    })
+    return data;
 }
 
 module.exports = {
@@ -103,5 +119,7 @@ module.exports = {
     deleteUser,
     getUserByEmail,
     getUserByToken,
-    userConfirmValidate
+    userConfirmValidate,
+    resetPassword,
+    newPasswordUser
 }
